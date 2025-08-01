@@ -2,6 +2,9 @@
     "name": "stereomon/composer-updater",
     "description": "A Symfony Console application that has console commands to update dependencies in modules composer.json.",
     "type": "project",
+    "bin": [
+        "bin/composer-updater"
+    ],
     "require": {
         "php": ">=8.3",
         "composer/composer": "^2.0",
