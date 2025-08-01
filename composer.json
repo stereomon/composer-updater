@@ -1,0 +1,56 @@
+{
+    "name": "spryker-sdk/dependency-updater",
+    "description": "A Symfony Console application that has console commands to update dependencies in modules.",
+    "type": "project",
+    "require": {
+        "php": ">=8.3",
+        "symfony/console": "^7.0",
+        "symfony/dependency-injection": "^7.0",
+        "symfony/config": "^7.0",
+        "symfony/yaml": "^7.0",
+        "symfony/framework-bundle": "^7.0",
+        "symfony/runtime": "^7.0",
+        "monolog/monolog": "^3.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5.0",
+        "codeception/module-asserts": "^3.2",
+        "codeception/lib-asserts": "^2.0",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/php-code-coverage": "^11.0",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Tests\\Support\\Helper\\": "tests/_support/Helper/"
+        }
+    },
+    "bin-dir": "bin",
+    "scripts": {
+        "phpstan": "phpstan analyse",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "codecept run",
+        "test-coverage": "codecept run --coverage",
+        "test-coverage-html": "codecept run --coverage-html",
+        "test-coverage-xml": "codecept run --coverage-xml",
+        "local-ci": [
+            "@cs-fix",
+            "@cs-check",
+            "@phpstan",
+            "@test"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/runtime": true
+        }
+    }
+}

@@ -1,0 +1,8 @@
+parameters:
+    level: max
+    paths:
+        - src
+    excludePaths:
+        - tests/
+    tmpDir: var/cache/phpstan
+    ignoreErrors:

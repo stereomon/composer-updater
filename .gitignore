@@ -1,0 +1,31 @@
+# Symfony
+var/    
+
+# Composer
+/vendor/
+composer.lock
+
+# Codeception
+tests/_output/*
+tests/_support/_generated
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# PHPStan
+phpstan.neon.dist
+phpstan-baseline.neon
+
+# PHP CS Fixer
+.php_cs.cache

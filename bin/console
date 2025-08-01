@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Update the file name to your needs to prevent naming conflicts when using multiple Symfony applications.
+ * 
+ * This file serves as the entry point for the Symfony console application.
+ * It initializes the Symfony kernel and returns a new Application instance.
+ */
+use App\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+
+if (!is_file(dirname(__DIR__).'/vendor/autoload.php')) {
+    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
+}
+
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
+return function (array $context) {
+    $kernel = new Kernel($context['APP_ENV'] ?? 'dev', (bool) ($context['APP_DEBUG'] ?? true));
+    
+    return new Application($kernel);
+};
