@@ -10,11 +10,21 @@
 use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
-if (!is_file(dirname(__DIR__).'/vendor/autoload.php')) {
-    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
+foreach ([__DIR__ . '/../../../../../autoload.php', __DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        define('COMPOSER_INSTALL', $file);
+        define('ROOT_DIR', realpath(dirname($file) . '/..'));
+        break;
+    }
 }
 
-require_once dirname(__DIR__).'/vendor/autoload.php';
+unset($file);
+
+if (!defined('COMPOSER_INSTALL')) {
+    throw new \Exception('Could not resolve path to vendor/autoload.php');
+}
+
+require_once COMPOSER_INSTALL;
 
 $kernel = new Kernel($context['APP_ENV'] ?? 'dev', (bool) ($context['APP_DEBUG'] ?? true));
 $application = new Application($kernel);
