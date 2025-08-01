@@ -1,16 +1,20 @@
 {
-    "name": "spryker-sdk/dependency-updater",
-    "description": "A Symfony Console application that has console commands to update dependencies in modules.",
+    "name": "stereomon/composer-updater",
+    "description": "A Symfony Console application that has console commands to update dependencies in modules composer.json.",
     "type": "project",
     "require": {
         "php": ">=8.3",
+        "composer/composer": "^2.0",
+        "knplabs/github-api": "^3.0",
+        "monolog/monolog": "^3.0",
+        "nyholm/psr7": "^1.8",
+        "symfony/config": "^7.0",
         "symfony/console": "^7.0",
         "symfony/dependency-injection": "^7.0",
-        "symfony/config": "^7.0",
-        "symfony/yaml": "^7.0",
         "symfony/framework-bundle": "^7.0",
+        "symfony/http-client": "^7.3",
         "symfony/runtime": "^7.0",
-        "monolog/monolog": "^3.0"
+        "symfony/yaml": "^7.0"
     },
     "require-dev": {
         "codeception/codeception": "^5.0",
@@ -50,6 +54,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
+            "php-http/discovery": true,
             "symfony/runtime": true
         }
     }
