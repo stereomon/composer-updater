@@ -1,3 +1,5 @@
+Feature name: Composer Dependncy Updater.
+
 I need a Symfony console command that takes a GitHub PR number as argument and fetches a diff from the Pull Request. Based on the diff we need to identify changed module names that have also changed the transfer.xml file. This command should print out a comma separated list of changed modules.
 
 I need a second console command that takes a comma separated list of module names, a package name that needs a version update, the expected version number to be added/update, and an optional description. The console command must use the AppFacade with a new method named "updateDependency". A new UpdateDependencyRequestTransfer must be added as well as a UpdateDependencyResponseTransfer.
