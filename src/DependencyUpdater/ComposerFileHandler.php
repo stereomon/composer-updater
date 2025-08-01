@@ -172,8 +172,12 @@ class ComposerFileHandler
         return $this->writeComposerJson($composerPath, $composerData);
     }
 
-    public function createDependencyJson(string $moduleName): bool
+    public function createDependencyJson(string $moduleName, ?string $description = null): bool
     {
+        if ($description === null || trim($description) === '') {
+            throw new \InvalidArgumentException('Description cannot be null or empty');
+        }
+
         $dependencyPath = getcwd() . '/Bundles/' . $moduleName . '/dependency.json';
         $realPath = realpath(dirname($dependencyPath));
 
@@ -185,15 +189,52 @@ class ComposerFileHandler
 
         $fullPath = $realPath . '/dependency.json';
 
+        // If file exists, read and check content
         if (file_exists($fullPath)) {
-            return true;
-        }
+            $existingContent = file_get_contents($fullPath);
 
-        $dependencyData = [
-            'include' => [
-                'spryker/transfer',
-            ],
-        ];
+            if ($existingContent === false) {
+                $this->logger->error(sprintf('Failed to read existing dependency file: %s', $fullPath));
+                return false;
+            }
+
+            $existingData = json_decode($existingContent, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $this->logger->error(sprintf('Invalid JSON in existing dependency file: %s', json_last_error_msg()));
+                return false;
+            }
+
+            if (!is_array($existingData)) {
+                $this->logger->error('Existing dependency file does not contain a valid JSON object');
+                return false;
+            }
+
+            // Check if spryker/transfer already exists in include section
+            if (isset($existingData['include']) && is_array($existingData['include'])) {
+                if (isset($existingData['include']['spryker/transfer'])) {
+                    // Package already exists, no need to add it
+                    return true;
+                }
+
+                // Add spryker/transfer to existing include array
+                $existingData['include']['spryker/transfer'] = $description;
+            } else {
+                // Create include section with spryker/transfer
+                $existingData['include'] = [
+                    'spryker/transfer' => $description,
+                ];
+            }
+
+            $dependencyData = $existingData;
+        } else {
+            // Create new dependency data
+            $dependencyData = [
+                'include' => [
+                    'spryker/transfer' => $description,
+                ],
+            ];
+        }
 
         $jsonContent = json_encode($dependencyData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
