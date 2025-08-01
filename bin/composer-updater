@@ -29,8 +29,3 @@ require_once COMPOSER_INSTALL;
 $kernel = new Kernel($context['APP_ENV'] ?? 'dev', (bool) ($context['APP_DEBUG'] ?? true));
 $application = new Application($kernel);
 $application->run();
-
-//return function (array $context) {
-//    die('TinaTurner');
-//
-//};
