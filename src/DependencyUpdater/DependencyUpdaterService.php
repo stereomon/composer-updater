@@ -81,7 +81,12 @@ class DependencyUpdaterService
             }
 
             if ($packageName === 'spryker/transfer' && $currentVersion === null) {
-                if (!$this->composerFileHandler->createDependencyJson($moduleName)) {
+                $updateResult = $this->composerFileHandler->createDependencyJson(
+                    $moduleName,
+                    $updateDependencyRequestTransfer->getDescription()
+                );
+
+                if (!$updateResult) {
                     $this->logger->error(sprintf('Failed to create dependency.json for module: %s', $moduleName));
                     continue;
                 }
